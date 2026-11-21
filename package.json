@@ -1,0 +1,40 @@
+{
+  "name": "hireme",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "db:local": "tsx scripts/localDb.ts",
+    "seed": "tsx --env-file-if-exists=.env src/workers/seed.ts",
+    "poll:ats": "tsx --env-file-if-exists=.env src/workers/pollAts.ts",
+    "poll:careers": "tsx --env-file-if-exists=.env src/workers/pollCareers.ts",
+    "report": "tsx --env-file-if-exists=.env src/workers/report.ts",
+    "probe": "tsx scripts/probeAts.ts"
+  },
+  "dependencies": {
+    "mongodb": "^7.9.1",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "robots-parser": "^3.1.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "mongodb-memory-server": "^11.3.0",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.1.1"
+  },
+  "type": "module"
+}

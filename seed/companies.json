@@ -1,0 +1,21 @@
+[
+  { "name": "Razorpay", "domain": "razorpay.com", "atsProvider": "greenhouse", "atsSlug": "razorpaysoftwareprivatelimited", "stage": "series_b_plus" },
+  { "name": "Groww", "domain": "groww.in", "atsProvider": "greenhouse", "atsSlug": "groww", "stage": "series_b_plus" },
+  { "name": "InMobi", "domain": "inmobi.com", "atsProvider": "greenhouse", "atsSlug": "inmobi", "stage": "series_b_plus" },
+  { "name": "Glance", "domain": "glance.com", "atsProvider": "greenhouse", "atsSlug": "glance", "stage": "series_b_plus" },
+  { "name": "Observe.AI", "domain": "observe.ai", "atsProvider": "greenhouse", "atsSlug": "observeai", "stage": "series_b_plus" },
+  { "name": "Sarvam AI", "domain": "sarvam.ai", "atsProvider": "ashby", "atsSlug": "sarvam" },
+  { "name": "Composio", "domain": "composio.dev", "atsProvider": "ashby", "atsSlug": "composio" },
+  { "name": "SpotDraft", "domain": "spotdraft.com", "atsProvider": "ashby", "atsSlug": "spotdraft" },
+  { "name": "SigNoz", "domain": "signoz.io", "atsProvider": "ashby", "atsSlug": "signoz" },
+  { "name": "Bolna", "domain": "bolna.ai", "atsProvider": "ashby", "atsSlug": "bolna" },
+  { "name": "Giga ML", "domain": "gigaml.com", "atsProvider": "ashby", "atsSlug": "gigaml" },
+  { "name": "CRED", "domain": "cred.club", "atsProvider": "lever", "atsSlug": "cred", "stage": "series_b_plus" },
+  { "name": "Meesho", "domain": "meesho.com", "atsProvider": "lever", "atsSlug": "meesho", "stage": "series_b_plus" },
+  { "name": "FamPay", "domain": "fampay.in", "atsProvider": "lever", "atsSlug": "fampay" },
+  { "name": "Pocket FM", "domain": "pocketfm.com", "atsProvider": "lever", "atsSlug": "pocketfm", "stage": "series_b_plus" },
+  { "name": "Mindtickle", "domain": "mindtickle.com", "atsProvider": "lever", "atsSlug": "mindtickle", "stage": "series_b_plus" },
+  { "name": "Hevo Data", "domain": "hevodata.com", "atsProvider": "lever", "atsSlug": "hevodata" },
+  { "name": "Dozee", "domain": "dozee.health", "atsProvider": "lever", "atsSlug": "dozee" },
+  { "name": "Zerodha", "domain": "zerodha.com", "atsProvider": "careers_page", "careersUrl": "https://zerodha.com/careers/" }
+]
