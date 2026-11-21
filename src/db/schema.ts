@@ -78,8 +78,14 @@ export interface Job {
   isActive: boolean;
   isGhostFlag: boolean;
   // Filled by the classifier, not by the board pullers.
+  /** The descriptionHash the fields below were extracted from. */
+  classifiedHash?: string;
   roleFamily?: string;
   seniority?: string;
+  /** Present only when the classifier, not the board, supplied workMode. */
+  workModeEvidence?: string;
+  officeDaysPerWeek?: number;
+  preOfficeEvidence?: string;
   blrHub?: BlrHub;
   isFoundingRole?: boolean;
   ctcMinLpa?: number;

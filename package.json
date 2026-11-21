@@ -13,6 +13,7 @@
     "seed": "tsx --env-file-if-exists=.env src/workers/seed.ts",
     "poll:ats": "tsx --env-file-if-exists=.env src/workers/pollAts.ts",
     "poll:careers": "tsx --env-file-if-exists=.env src/workers/pollCareers.ts",
+    "classify": "tsx --env-file-if-exists=.env src/workers/classifyJobs.ts",
     "report": "tsx --env-file-if-exists=.env src/workers/report.ts",
     "probe": "tsx scripts/probeAts.ts"
   },

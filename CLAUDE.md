@@ -65,3 +65,12 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ---
 
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
+
+---
+
+## What's new
+
+Newest first. Add an entry when the frontend or the workflow changes.
+
+- **2026-11-22** — Workflow: `npm run classify` (Gemini fills role family, seniority, work mode, hub, pay, equity and stack on each job; every claim must quote the posting). Nightly GitHub Actions run (`.github/workflows/nightly.yml`) and CI (`ci.yml`). The Gemini key is read from `GEMINI_API_KEY`.
+- **2026-11-21** — Stack set to Next.js (App Router), TypeScript and MongoDB. Workflow: `npm run db:local`, `seed`, `poll:ats`, `poll:careers`, `report`, `probe`. Frontend: home page lists companies with a hiring signal in the last 30 days.

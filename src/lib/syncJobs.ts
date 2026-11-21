@@ -49,6 +49,8 @@ export async function syncJobs(
               lastSeenOn: snapshot,
               isActive: true,
             },
+            // A mode from the board replaces one the classifier inferred.
+            ...(workMode ? { $unset: { workModeEvidence: "" } } : {}),
             $setOnInsert: {
               ...(workMode ? {} : { workMode: null }),
               postedOn: postedOn ? asDate(postedOn) : null,

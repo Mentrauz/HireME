@@ -54,9 +54,11 @@ export function collections(db: Db): Collections {
   };
 }
 
-/** The database named in the connection string. */
+/** The database named in the connection string, or "hireme" when it names none. */
 export async function getCollections(): Promise<Collections> {
-  return collections((await mongoClient()).db());
+  const client = await mongoClient();
+  // The driver falls back to a database called "test" for a URI without a path.
+  return collections(client.db(client.options.dbName === "test" ? "hireme" : undefined));
 }
 
 /** Idempotent; workers call it on start so a fresh database is usable. */

@@ -1,0 +1,38 @@
+# Refreshes the index once a day. Needs three repository secrets:
+# MONGODB_URI, GEMINI_API_KEY and CONTACT_EMAIL.
+name: nightly
+
+on:
+  schedule:
+    - cron: "30 20 * * *" # 02:00 IST
+  workflow_dispatch:
+
+concurrency: nightly
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run poll:ats
+      - run: npm run poll:careers
+        if: ${{ !cancelled() }}
+      - run: npm run classify
+        if: ${{ !cancelled() }}
+      # Stand-in for the R2 bucket: keeps each day's raw responses for 90 days.
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: raw-${{ github.run_id }}
+          path: .data/raw
+          retention-days: 90
