@@ -1,4 +1,4 @@
-# Bengaluru Startup Hiring Radar
+# HireME (currently Limited to BLR)
 
 Which Bengaluru startups are hiring right now. The plan is in [PLAN.md](PLAN.md); the research behind it is in [RESEARCH.md](RESEARCH.md).
 

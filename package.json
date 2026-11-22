@@ -18,6 +18,7 @@
     "probe": "tsx scripts/probeAts.ts"
   },
   "dependencies": {
+    "lenis": "^1.3.27",
     "mongodb": "^7.9.1",
     "next": "16.4.6",
     "react": "19.3.0",

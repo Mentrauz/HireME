@@ -53,9 +53,13 @@ html {
   color-scheme: dark;
   background: var(--color-ground);
   color: var(--color-ink);
-  scrollbar-color: var(--color-line-strong) transparent;
-  scroll-behavior: smooth;
+  /* Hidden until the pointer is over it; SmoothScroll.tsx sets data-scrollbar. */
+  scrollbar-color: transparent transparent;
   scroll-padding-top: 5rem;
+}
+
+html[data-scrollbar] {
+  scrollbar-color: var(--color-line-strong) transparent;
 }
 
 body {
@@ -150,9 +154,6 @@ input[type="radio"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   .beam::before {
     animation: none;
   }

@@ -74,6 +74,8 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 Newest first. Add an entry when the frontend or the workflow changes.
 
+- **2026-11-22** — Frontend: Lenis smooth scrolling on every page (`src/components/SmoothScroll.tsx`, mounted in `layout.tsx`; off under reduced motion; in-page links offset by the header). The page scrollbar is hidden until the mouse reaches the right edge.
+
 - **2026-11-22** — Frontend, dark redesign:
   - The site is dark only (tokens in `src/app/globals.css`).
   - `/` is a new landing page built on live index data.
