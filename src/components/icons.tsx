@@ -75,3 +75,25 @@ export const FiltersIcon = (p: IconProps) => (
     <path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4" />
   </Icon>
 );
+
+export const ArrowRightIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 12h14" />
+    <path d="m13 6 6 6-6 6" />
+  </Icon>
+);
+
+export const BoardsIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <ellipse cx="12" cy="5.5" rx="8" ry="3" />
+    <path d="M4 5.5v6.5c0 1.7 3.6 3 8 3s8-1.3 8-3V5.5" />
+    <path d="M4 12v6.5c0 1.7 3.6 3 8 3s8-1.3 8-3V12" />
+  </Icon>
+);
+
+export const ReadIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+    <path d="M14 3v5h5M9 13h6M9 17h4" />
+  </Icon>
+);

@@ -188,3 +188,24 @@ export async function companyProfile(domain: string): Promise<CompanyProfile | n
     bengaluruRoles: roles.filter((r) => BENGALURU.test(r.location ?? "")).length,
   };
 }
+
+/** Headline counts, scoped like the default search: Bengaluru roles at companies hiring now. */
+export interface SiteStats {
+  hiringCompanies: number;
+  liveRoles: number;
+  /** When the job boards were last read. */
+  checkedAt: Date | null;
+}
+
+export async function siteStats(): Promise<SiteStats> {
+  const { companies, jobs, sourceRuns } = await getCollections();
+  const cutoff = new Date(Date.now() - HIRING_WINDOW_DAYS * 86_400_000);
+  const pool = await companies.find({ lastHiringSignalAt: { $gte: cutoff } }, { projection: { _id: 1 } }).toArray();
+  const scope: Filter<Job> = { isActive: true, companyId: { $in: pool.map((c) => c._id) }, location: BENGALURU };
+  const [withRoles, liveRoles, lastRun] = await Promise.all([
+    jobs.distinct("companyId", scope),
+    jobs.countDocuments(scope),
+    sourceRuns.find({ source: "ats", finishedAt: { $exists: true } }).sort({ finishedAt: -1 }).limit(1).next(),
+  ]);
+  return { hiringCompanies: withRoles.length, liveRoles, checkedAt: lastRun?.finishedAt ?? null };
+}

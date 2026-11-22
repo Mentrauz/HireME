@@ -7,7 +7,7 @@ export default function NotFound() {
       <p className="mx-auto mt-2 max-w-md text-sm text-muted">
         It may not be in our list yet, or the link has a typo. Search the companies we do track instead.
       </p>
-      <Link href="/" className="mt-6 inline-block rounded-lg bg-ink px-5 py-2.5 text-sm font-semibold text-white hover:bg-ink-2">
+      <Link href="/companies" className="mt-6 inline-block rounded-lg bg-ink px-5 py-2.5 text-sm font-semibold text-ground transition-colors hover:bg-white">
         Back to all companies
       </Link>
     </main>

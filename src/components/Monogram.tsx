@@ -6,7 +6,7 @@ export function Monogram({ name, size = "md" }: { name: string; size?: "md" | "l
   return (
     <span
       aria-hidden="true"
-      className={`${box} grid shrink-0 place-items-center border border-line bg-chip font-semibold tracking-tight text-ink`}
+      className={`${box} grid shrink-0 place-items-center border border-line-strong bg-raised font-semibold tracking-tight text-ink`}
     >
       {initials(name)}
     </span>

@@ -52,14 +52,14 @@ function SelectField({ icon, label, name, value, options, className = "" }: {
 export function SearchBar({ filters: f }: { filters: SearchFilters }) {
   const chips = activeChips(f);
   return (
-    <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line shadow-[0_1px_2px_rgba(12,13,15,0.04)] lg:grid-cols-[minmax(0,1fr)_200px_240px_auto]">
+    <div className="grid gap-px overflow-hidden rounded-2xl border border-line-strong bg-line shadow-[0_24px_48px_-24px_rgba(0,0,0,0.9)] lg:grid-cols-[minmax(0,1fr)_200px_240px_auto]">
       <div className="flex min-h-14 flex-wrap items-center gap-2 bg-surface px-4 py-2 focus-within:shadow-[inset_0_0_0_2px_var(--color-ink)]">
         <SearchIcon className="size-[18px] shrink-0 text-muted" />
         {chips.map((c) => (
           <Link
             key={c.href + c.label}
             href={c.href}
-            className="flex items-center gap-1.5 rounded-md bg-chip py-1 pr-1.5 pl-2 text-xs font-medium text-ink-2 transition-colors hover:bg-line"
+            className="flex items-center gap-1.5 rounded-md bg-chip py-1 pr-1.5 pl-2 text-xs font-medium text-ink-2 transition-colors hover:bg-line-strong"
           >
             {c.label}
             <CloseIcon className="size-3.5" />
@@ -91,7 +91,7 @@ export function SearchBar({ filters: f }: { filters: SearchFilters }) {
       />
       <button
         type="submit"
-        className="min-h-14 bg-ink px-7 text-sm font-semibold text-white transition-colors hover:bg-ink-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
+        className="min-h-14 bg-ink px-7 text-sm font-semibold text-ground transition-colors hover:bg-white focus-visible:outline-offset-[-4px] focus-visible:outline-ground"
       >
         Search
       </button>
@@ -101,7 +101,7 @@ export function SearchBar({ filters: f }: { filters: SearchFilters }) {
 
 function Count({ n, on }: { n: number; on: boolean }) {
   return (
-    <span className={`min-w-7 rounded-full px-1.5 text-center text-xs leading-5 tabular-nums ${on ? "bg-live-soft font-medium text-live" : "bg-line text-muted"}`}>
+    <span className={`min-w-7 rounded-full px-1.5 text-center text-xs leading-5 tabular-nums ${on ? "bg-live-soft font-medium text-live" : "bg-chip text-muted"}`}>
       {n}
     </span>
   );
@@ -123,7 +123,7 @@ function Option({ name, value, label, count, checked }: { name: string; value: s
   const empty = count === 0 && !checked;
   return (
     <li>
-      <label className={`flex items-center gap-3 rounded-md py-1 text-sm ${empty ? "cursor-default text-muted/70" : "cursor-pointer text-ink-2 hover:text-ink"}`}>
+      <label className={`flex items-center gap-3 rounded-md py-1 text-sm ${empty ? "cursor-default text-muted/60" : "cursor-pointer text-ink-2 hover:text-ink"}`}>
         <input type="checkbox" name={name} value={value} defaultChecked={checked} disabled={empty} className="size-4 shrink-0 cursor-[inherit]" />
         <span className="min-w-0 flex-1 truncate">{label}</span>
         <Count n={count} on={checked} />
@@ -134,7 +134,7 @@ function Option({ name, value, label, count, checked }: { name: string; value: s
 
 export function FilterPanel({ filters: f, facets }: { filters: SearchFilters; facets: SearchResult["facets"] }) {
   return (
-    <div className="rounded-xl border border-line bg-surface p-5 md:border-0 md:bg-transparent md:p-0">
+    <div className="rounded-2xl border border-line bg-surface p-5 md:border-0 md:bg-transparent md:p-0">
       <Group title="Work mode">
         {WORK_MODES.map((v) => (
           <Option key={v} name="workMode" value={v} label={WORK_MODE_LABELS[v]} count={facets.workMode[v] ?? 0} checked={f.workMode.includes(v)} />
@@ -161,11 +161,11 @@ export function FilterPanel({ filters: f, facets }: { filters: SearchFilters; fa
       <div className="flex gap-2 pt-5">
         <button
           type="submit"
-          className="rounded-lg bg-ink px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
+          className="rounded-lg bg-ink px-5 py-2.5 text-sm font-semibold text-ground transition-colors hover:bg-white"
         >
           Apply
         </button>
-        <Link href="/" className="rounded-lg bg-chip px-5 py-2.5 text-sm font-semibold text-ink-2 transition-colors hover:bg-line">
+        <Link href="/companies" className="rounded-lg border border-line-strong px-5 py-2.5 text-sm font-semibold text-ink-2 transition-colors hover:bg-raised hover:text-ink">
           Reset
         </Link>
       </div>

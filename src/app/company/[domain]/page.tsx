@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { BackIcon, ExternalIcon } from "@/components/icons";
 import { Monogram } from "@/components/Monogram";
@@ -20,7 +21,7 @@ type Params = Promise<{ domain: string }>;
 export default function CompanyPage({ params }: { params: Params }) {
   return (
     <main className="mx-auto w-full max-w-[960px] px-4 pt-6 pb-16 sm:px-6">
-      <Link href="/" className="inline-flex items-center gap-1.5 rounded text-sm text-muted hover:text-ink">
+      <Link href="/companies" className="inline-flex items-center gap-1.5 rounded text-sm text-muted hover:text-ink">
         <BackIcon />
         All companies
       </Link>
@@ -41,6 +42,7 @@ function Fact({ label, value, muted = false }: { label: string; value: string; m
 }
 
 async function Profile({ params }: { params: Params }) {
+  await connection();
   const { domain } = await params;
   const data = await companyProfile(decodeURIComponent(domain));
   if (!data) notFound();
@@ -49,7 +51,7 @@ async function Profile({ params }: { params: Params }) {
 
   return (
     <>
-      <section className="mt-4 rounded-xl border border-line bg-surface p-6">
+      <section className="mt-4 rounded-2xl border border-line bg-surface p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
         <div className="flex flex-wrap items-start gap-4">
           <Monogram name={c.name} size="lg" />
           <div className="min-w-[10rem] flex-1">
@@ -69,7 +71,7 @@ async function Profile({ params }: { params: Params }) {
               href={board}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-chip"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-raised"
             >
               {SOURCE_LABELS[c.atsProvider]} board
               <ExternalIcon className="size-3.5" />
@@ -93,7 +95,7 @@ async function Profile({ params }: { params: Params }) {
           Live roles <span className="font-normal text-muted tabular-nums">{roles.length}</span>
         </h2>
         {roles.length > 0 ? (
-          <ul className="mt-3 divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
+          <ul className="mt-3 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface">
             {roles.map((r) => (
               <RoleRow key={r.id} role={r} />
             ))}
@@ -125,7 +127,7 @@ function RoleRow({ role: r }: { role: RoleSummary }) {
   ].filter((t): t is string => Boolean(t));
 
   return (
-    <li className="relative grid gap-3 px-5 py-4 transition-colors hover:bg-ground/60">
+    <li className="relative grid gap-3 px-5 py-4 transition-colors hover:bg-raised">
       <div className="min-w-0">
         <a
           href={r.sourceUrl}

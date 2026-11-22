@@ -44,21 +44,21 @@ describe("parseFilters", () => {
 
 describe("searchHref", () => {
   it("leaves defaults out of the URL", () => {
-    expect(searchHref(parseFilters({}))).toBe("/");
+    expect(searchHref(parseFilters({}))).toBe("/companies");
   });
 
   it("round-trips through parseFilters", () => {
     const f = parseFilters({ q: "data", workMode: ["remote", "hybrid"], stack: "Python", sort: "roles" });
     const href = searchHref(f);
-    expect(href).toBe("/?q=data&workMode=remote&workMode=hybrid&stack=Python&sort=roles");
-    const params = new URLSearchParams(href.slice(2));
+    expect(href).toBe("/companies?q=data&workMode=remote&workMode=hybrid&stack=Python&sort=roles");
+    const params = new URLSearchParams(href.split("?")[1]);
     const back = parseFilters(Object.fromEntries([...new Set(params.keys())].map((k) => [k, params.getAll(k)])));
     expect(back).toEqual(f);
   });
 
   it("removes one value without touching the rest", () => {
     const f = parseFilters({ workMode: ["remote", "hybrid"] });
-    expect(searchHref(f, { workMode: ["hybrid"] })).toBe("/?workMode=hybrid");
+    expect(searchHref(f, { workMode: ["hybrid"] })).toBe("/companies?workMode=hybrid");
   });
 });
 

@@ -4,17 +4,18 @@ import type { CompanyResult } from "@/lib/queries";
 import { ExternalIcon } from "./icons";
 import { Monogram } from "./Monogram";
 
-export function CompanyCard({ company: c }: { company: CompanyResult }) {
+/** countLabel names what the "x of y" role count is narrowed by. */
+export function CompanyCard({ company: c, countLabel = "Matching" }: { company: CompanyResult; countLabel?: string }) {
   const board = boardUrl(c);
   const more = c.matchingRoles - c.roles.length;
 
   return (
-    <article className="relative flex flex-col rounded-xl border border-line bg-surface p-5 transition-[box-shadow,border-color] duration-200 ease-out hover:border-line-strong hover:shadow-[0_8px_20px_-10px_rgba(12,13,15,0.18)]">
+    <article className="relative flex flex-col rounded-2xl border border-line bg-surface p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] transition-[background-color,border-color] duration-200 ease-out hover:border-line-strong hover:bg-raised">
       <header className="flex items-start gap-3">
         <Monogram name={c.name} />
         <div className="min-w-0 flex-1">
           <h2 className="text-[15px] leading-snug font-semibold">
-            <Link href={`/company/${c.domain}`} className="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ink">
+            <Link href={`/company/${c.domain}`} className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-ink">
               {c.name}
             </Link>
           </h2>
@@ -33,7 +34,7 @@ export function CompanyCard({ company: c }: { company: CompanyResult }) {
           <dd className={`mt-0.5 ${c.workMode ? "font-semibold" : "text-muted"}`}>{c.workMode ? WORK_MODE_LABELS[c.workMode] : "Not stated"}</dd>
         </div>
         <div className="text-right">
-          <dt className="text-muted">{c.matchingRoles === c.liveRoles ? "Roles" : "Matching"}</dt>
+          <dt className="text-muted">{c.matchingRoles === c.liveRoles ? "Roles" : countLabel}</dt>
           <dd className="mt-0.5 font-semibold tabular-nums">
             {c.matchingRoles === c.liveRoles ? c.liveRoles : `${c.matchingRoles} of ${c.liveRoles}`}
           </dd>

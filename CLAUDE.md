@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+Only Use Haiku and Sonnet Agents depending on the work requirements.
+
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
 **Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
@@ -71,6 +73,12 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 ## What's new
 
 Newest first. Add an entry when the frontend or the workflow changes.
+
+- **2026-11-22** — Frontend, dark redesign:
+  - The site is dark only (tokens in `src/app/globals.css`).
+  - `/` is a new landing page built on live index data.
+  - The search moved from `/` to `/companies` and has a hero band.
+  - `GlyphField` is the animated dot backdrop; the header and footer are in `SiteHeader.tsx`.
 
 - **2026-11-22** — Frontend:
   - `/` is now a company search. The search bar holds keyword, location (Bengaluru or any) and hiring window. The left column filters by work mode, level, role family, stack and founding roles, each option with a live role count. Results are company cards listing their matching roles.

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter, SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: { default: "HireME · Bengaluru startups hiring now", template: "%s · HireME" },
-  description: "Bengaluru startups with a new role in the last 30 days, with every role linked to its source.",
+  description: "Bengaluru startups that posted a new role in the last 30 days, with every role linked to its source.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -27,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-ground text-ink">
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

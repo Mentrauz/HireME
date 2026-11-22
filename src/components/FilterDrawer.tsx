@@ -13,7 +13,7 @@ export function FilterDrawer({ activeCount, children }: { activeCount: number; c
         aria-expanded={open}
         aria-controls="filters"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between rounded-lg border border-line bg-surface px-4 py-3 text-sm font-medium md:hidden"
+        className="flex w-full items-center justify-between rounded-xl border border-line bg-surface px-4 py-3 text-sm font-medium md:hidden"
       >
         <span className="flex items-center gap-2">
           <FiltersIcon />

@@ -50,7 +50,7 @@ export function searchHref(f: SearchFilters, change: Partial<SearchFilters> = {}
   if (g.founding) s.set("founding", "1");
   if (g.sort !== "recent") s.set("sort", g.sort);
   const query = s.toString();
-  return query ? `/?${query}` : "/";
+  return query ? `/companies?${query}` : "/companies";
 }
 
 /** True when a filter that only classified roles can match is on. */
