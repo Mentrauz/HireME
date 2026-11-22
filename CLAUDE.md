@@ -72,6 +72,11 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 Newest first. Add an entry when the frontend or the workflow changes.
 
+- **2026-11-22** — Frontend:
+  - `/` is now a company search. The search bar holds keyword, location (Bengaluru or any) and hiring window. The left column filters by work mode, level, role family, stack and founding roles, each option with a live role count. Results are company cards listing their matching roles.
+  - New `/company/[domain]` page lists every live role, each linked to its posting.
+  - Filters live in the URL (`src/lib/filters.ts`).
+  - Product context is in `PRODUCT.md`, and the visual system in `DESIGN.md`.
 - **2026-11-22** — Workflow: Keka is a fourth job board. A Keka `atsSlug` is `<subdomain>/<board id>`; the board id is the GUID on `https://<subdomain>.keka.com/careers/`. Frontend: cards can show "Keka board" as the source.
 - **2026-11-22** — Workflow: `npm run classify` (Gemini fills role family, seniority, work mode, hub, pay, equity and stack on each job; every claim must quote the posting). Nightly GitHub Actions run (`.github/workflows/nightly.yml`) and CI (`ci.yml`). The Gemini key is read from `GEMINI_API_KEY`.
 - **2026-11-21** — Stack set to Next.js (App Router), TypeScript and MongoDB. Workflow: `npm run db:local`, `seed`, `poll:ats`, `poll:careers`, `report`, `probe`. Frontend: home page lists companies with a hiring signal in the last 30 days.

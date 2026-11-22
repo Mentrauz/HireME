@@ -46,6 +46,9 @@ next-env.d.ts
 
 PLAN.md
 RESEARCH.md
-.github
+/.github/*
+!/.github/workflows/
 .claude
 .impeccable
+PRODUCT.md
+DESIGN.md

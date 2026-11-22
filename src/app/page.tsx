@@ -1,78 +1,115 @@
+import Link from "next/link";
 import { Suspense } from "react";
-import { connection } from "next/server";
-import { HIRING_WINDOW_DAYS, hiringCompanies } from "@/lib/queries";
+import { CompanyCard } from "@/components/CompanyCard";
+import { FilterDrawer } from "@/components/FilterDrawer";
+import { activeChips, FilterPanel, SearchBar } from "@/components/SearchControls";
+import { parseFilters, searchHref, usesClassifierFields, type SearchParams } from "@/lib/filters";
+import { searchCompanies } from "@/lib/queries";
 
-const STAGE_LABELS: Record<string, string> = {
-  stealth: "Stealth",
-  pre_seed: "Pre-seed",
-  seed: "Seed",
-  series_a: "Series A",
-  series_b_plus: "Series B+",
-};
-
-const SOURCE_LABELS: Record<string, string> = {
-  greenhouse: "Greenhouse board",
-  ashby: "Ashby board",
-  lever: "Lever board",
-  keka: "Keka board",
-  careers_page: "Careers page",
-};
-
-const day = new Intl.DateTimeFormat("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-
-async function HiringTable() {
-  // The index changes daily, so read it per request rather than at build time.
-  await connection();
-  const companies = await hiringCompanies();
-
-  if (!companies.length) {
-    return <p className="text-zinc-600">No company has a hiring signal in the last {HIRING_WINDOW_DAYS} days yet.</p>;
-  }
-
+export default function Home({ searchParams }: { searchParams: Promise<SearchParams> }) {
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-left text-sm">
-        <thead className="border-b border-zinc-300 text-zinc-600">
-          <tr>
-            <th className="py-2 pr-4 font-medium">Company</th>
-            <th className="py-2 pr-4 font-medium">Stage</th>
-            <th className="py-2 pr-4 font-medium">Last hiring signal</th>
-            <th className="py-2 pr-4 text-right font-medium">Open roles</th>
-            <th className="py-2 pr-4 text-right font-medium">In Bengaluru</th>
-            <th className="py-2 font-medium">Source</th>
-          </tr>
-        </thead>
-        <tbody>
-          {companies.map((co) => (
-            <tr key={co.id} className="border-b border-zinc-200">
-              <td className="py-2 pr-4">
-                <a className="font-medium underline-offset-2 hover:underline" href={`https://${co.domain}`} rel="noreferrer">
-                  {co.name}
-                </a>
-              </td>
-              <td className="py-2 pr-4">{co.stage ? STAGE_LABELS[co.stage] : "—"}</td>
-              <td className="py-2 pr-4 tabular-nums">{day.format(co.lastHiringSignalAt)}</td>
-              <td className="py-2 pr-4 text-right tabular-nums">{co.liveJobs}</td>
-              <td className="py-2 pr-4 text-right tabular-nums">{co.bengaluruJobs}</td>
-              <td className="py-2 text-zinc-600">{co.atsProvider ? SOURCE_LABELS[co.atsProvider] : "—"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <main className="mx-auto w-full max-w-[1240px] px-4 pt-6 pb-16 sm:px-6">
+      <Suspense fallback={<SearchSkeleton />}>
+        <Search searchParams={searchParams} />
+      </Suspense>
+    </main>
   );
 }
 
-export default function Home() {
+async function Search({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const f = parseFilters(await searchParams);
+  const r = await searchCompanies(f);
+  const n = r.companies.length;
+  const sortLink = (sort: "recent" | "roles", label: string) => (
+    <Link
+      href={searchHref(f, { sort })}
+      aria-current={f.sort === sort ? "true" : undefined}
+      className={f.sort === sort ? "font-semibold text-ink" : "text-muted underline-offset-2 hover:text-ink hover:underline"}
+    >
+      {label}
+    </Link>
+  );
+
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 py-10">
-      <h1 className="text-2xl font-semibold">Bengaluru startups hiring now</h1>
-      <p className="mt-1 mb-6 text-zinc-600">
-        Companies that published a new role in the last {HIRING_WINDOW_DAYS} days, newest first.
-      </p>
-      <Suspense fallback={<p className="text-zinc-600">Loading…</p>}>
-        <HiringTable />
-      </Suspense>
-    </main>
+    <form action="/" method="get">
+      {f.sort !== "recent" && <input type="hidden" name="sort" value={f.sort} />}
+      <SearchBar filters={f} />
+
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
+        <aside aria-label="Filters">
+          <FilterDrawer activeCount={activeChips(f).length}>
+            <FilterPanel filters={f} facets={r.facets} />
+          </FilterDrawer>
+        </aside>
+
+        <section aria-labelledby="results-heading" className="min-w-0">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+            <h1 id="results-heading" className="text-2xl tracking-tight">
+              <span className="font-semibold tabular-nums">{n}</span> {n === 1 ? "company" : "companies"}{" "}
+              {f.window === "30d" ? "hiring now" : "with live roles"}
+            </h1>
+            <p className="flex gap-3 text-sm">
+              <span className="text-muted">Sort by</span>
+              {sortLink("recent", "Newest role")}
+              {sortLink("roles", "Most roles")}
+            </p>
+          </div>
+          <p className="mt-1 text-sm text-muted">
+            {r.matchingRoles} matching {r.matchingRoles === 1 ? "role" : "roles"}
+            {f.location === "bengaluru" ? " in Bengaluru" : ""}
+            {f.window === "30d" ? ", from companies that posted a new role in the last 30 days." : "."}
+          </p>
+          {usesClassifierFields(f) && r.unreadRoles > 0 && (
+            <p className="mt-3 rounded-lg border border-line bg-surface px-4 py-3 text-sm text-ink-2">
+              {r.unreadRoles} {r.unreadRoles === 1 ? "role hasn't" : "roles haven't"} been read yet, so these filters skip{" "}
+              {r.unreadRoles === 1 ? "it" : "them"}. New roles are read every night.
+            </p>
+          )}
+
+          {n > 0 ? (
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+              {r.companies.map((c) => (
+                <CompanyCard key={c.id} company={c} />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-5 rounded-xl border border-dashed border-line-strong bg-surface px-6 py-14 text-center">
+              <p className="font-semibold">No company matches all of these filters</p>
+              <p className="mx-auto mt-1 max-w-sm text-sm text-muted">
+                {f.location === "bengaluru"
+                  ? "Remove a filter from the search bar, or set the location to Any location to include roles outside Bengaluru."
+                  : "Remove a filter from the search bar, or set the hiring signal to Any time."}
+              </p>
+              <Link href="/" className="mt-5 inline-block rounded-lg bg-ink px-5 py-2.5 text-sm font-semibold text-white hover:bg-ink-2">
+                Clear all filters
+              </Link>
+            </div>
+          )}
+        </section>
+      </div>
+    </form>
+  );
+}
+
+function SearchSkeleton() {
+  return (
+    <div aria-busy="true" aria-label="Loading companies">
+      <div className="h-14 rounded-xl border border-line bg-surface" />
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
+        <div className="hidden space-y-3 md:block">
+          {Array.from({ length: 8 }, (_, i) => (
+            <div key={i} className="h-4 rounded bg-line motion-safe:animate-pulse" />
+          ))}
+        </div>
+        <div>
+          <div className="h-8 w-64 rounded bg-line motion-safe:animate-pulse" />
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+            {Array.from({ length: 6 }, (_, i) => (
+              <div key={i} className="h-64 rounded-xl border border-line bg-surface" />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
