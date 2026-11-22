@@ -53,13 +53,61 @@ html {
   color-scheme: dark;
   background: var(--color-ground);
   color: var(--color-ink);
-  /* Hidden until the pointer is over it; SmoothScroll.tsx sets data-scrollbar. */
-  scrollbar-color: transparent transparent;
+  /* The page scrollbar is drawn by Scrollbar.tsx instead. */
+  scrollbar-width: none;
   scroll-padding-top: 5rem;
 }
 
-html[data-scrollbar] {
-  scrollbar-color: var(--color-line-strong) transparent;
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Floating page scrollbar (Scrollbar.tsx): a thin thumb, no track. */
+.scrollbar {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 50;
+  width: 14px;
+  padding: 4px 3px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scrollbar[data-active] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.scrollbar[data-off] {
+  display: none;
+}
+.scrollbar-thumb {
+  width: 5px;
+  margin-left: auto;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-ink) 24%, transparent);
+  cursor: grab;
+  touch-action: none;
+  will-change: transform;
+  transition:
+    width 0.18s ease-out,
+    background-color 0.18s ease-out;
+}
+.scrollbar:hover .scrollbar-thumb,
+.scrollbar[data-drag] .scrollbar-thumb {
+  width: 8px;
+  background: color-mix(in srgb, var(--color-ink) 46%, transparent);
+}
+.scrollbar[data-drag] .scrollbar-thumb {
+  cursor: grabbing;
+}
+/* No text selection while dragging the thumb. */
+html:has(.scrollbar[data-drag]) {
+  user-select: none;
+}
+@media (pointer: coarse) {
+  .scrollbar[data-active] {
+    pointer-events: none;
+  }
 }
 
 body {
@@ -154,6 +202,10 @@ input[type="radio"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .scrollbar,
+  .scrollbar-thumb {
+    transition: none;
+  }
   .beam::before {
     animation: none;
   }

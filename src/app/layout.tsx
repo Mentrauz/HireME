@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter, SiteHeader } from "@/components/SiteHeader";
+import { Scrollbar } from "@/components/Scrollbar";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {children}
         <SiteFooter />
         <SmoothScroll />
+        <Scrollbar />
       </body>
     </html>
   );

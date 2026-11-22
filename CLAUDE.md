@@ -74,7 +74,9 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 Newest first. Add an entry when the frontend or the workflow changes.
 
-- **2026-11-22** — Frontend: Lenis smooth scrolling on every page (`src/components/SmoothScroll.tsx`, mounted in `layout.tsx`; off under reduced motion; in-page links offset by the header). The page scrollbar is hidden until the mouse reaches the right edge.
+- **2026-11-22** — Workflow: Tailwind now runs through its standard PostCSS plugin (`postcss.config.mjs`, `@tailwindcss/postcss`) instead of a custom Turbopack loader, so edits to `globals.css` reach a running dev server. Frontend: the company page labels Stage as coming from the seed list until funding rounds are sourced.
+
+- **2026-11-22** — Frontend: Lenis smooth scrolling on every page (`src/components/SmoothScroll.tsx`, mounted in `layout.tsx`; off under reduced motion; in-page links offset by the header). The native page scrollbar is replaced by a floating thumb (`src/components/Scrollbar.tsx`, styles under `.scrollbar` in `globals.css`) that shows while scrolling or near the right edge, and can be dragged.
 
 - **2026-11-22** — Frontend, dark redesign:
   - The site is dark only (tokens in `src/app/globals.css`).

@@ -32,11 +32,12 @@ export default function CompanyPage({ params }: { params: Params }) {
   );
 }
 
-function Fact({ label, value, muted = false }: { label: string; value: string; muted?: boolean }) {
+function Fact({ label, value, muted = false, note }: { label: string; value: string; muted?: boolean; note?: string }) {
   return (
     <div>
       <dt className="text-xs text-muted">{label}</dt>
       <dd className={`mt-0.5 text-sm ${muted ? "text-muted" : "font-medium"}`}>{value}</dd>
+      {note && <dd className="mt-0.5 text-xs text-muted">{note}</dd>}
     </div>
   );
 }
@@ -79,7 +80,13 @@ async function Profile({ params }: { params: Params }) {
           )}
         </div>
         <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-5 sm:grid-cols-4">
-          <Fact label="Stage" value={c.stage ? STAGE_LABELS[c.stage] : "Not known"} muted={!c.stage} />
+          {/* Stage comes from the hand-built seed list until funding rounds are sourced. */}
+          <Fact
+            label="Stage"
+            value={c.stage ? STAGE_LABELS[c.stage] : "Not known"}
+            muted={!c.stage}
+            note={c.stage ? "From our seed list, not yet sourced" : undefined}
+          />
           <Fact label="Cohort" value={c.cohort ?? "None recorded"} muted={!c.cohort} />
           <Fact
             label="Last new role"
