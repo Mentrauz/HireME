@@ -126,3 +126,47 @@ describe("htmlToText", () => {
     expect(htmlToText("<p>A &amp; B</p><script>x()</script><p>C&#39;s</p>")).toBe("A & B\nC's");
   });
 });
+
+describe("keka", () => {
+  const posting = {
+    id: 94711,
+    title: "Senior Sales Engineer ",
+    description: "<div><strong>Job Location: Bangalore</strong></div><div>US shift.</div>",
+    departmentName: "Sales Engineering",
+    jobLocations: [
+      { id: 3271, name: "Bangalore", city: "Bangalore", state: "KA", countryCode: "IN", countryName: "India" },
+      { id: 3275, name: "Gurgaon", city: "Gurgaon", state: "HR", countryCode: "IN", countryName: "India" },
+    ],
+    jobType: 2,
+    salaryRangeFormat: "INR 35,00,000.00 - 54,00,000.00",
+    publishedOn: "2026-11-04T13:36:39.583Z",
+  };
+
+  it("builds the widget URL from subdomain and board id", () => {
+    expect(adapters.keka.url("zluri/ed2b6b25-be74-43f1-9a38-c3bf27b9146c")).toBe(
+      "https://zluri.keka.com/careers/api/embedjobs/default/active/ed2b6b25-be74-43f1-9a38-c3bf27b9146c",
+    );
+    expect(() => adapters.keka.url("zluri")).toThrow(/subdomain/);
+  });
+
+  it("normalizes a posting and appends the stated salary", () => {
+    expect(adapters.keka.parse([posting], "zluri/ed2b6b25")).toEqual([
+      {
+        source: "keka",
+        externalId: "94711",
+        title: "Senior Sales Engineer",
+        department: "Sales Engineering",
+        location: "Bangalore; Gurgaon",
+        workMode: null,
+        description: "Job Location: Bangalore\nUS shift.\n\nSalary: INR 35,00,000.00 - 54,00,000.00",
+        applyUrl: "https://zluri.keka.com/careers/jobdetails/94711",
+        sourceUrl: "https://zluri.keka.com/careers/jobdetails/94711",
+        postedOn: "2026-11-04",
+      },
+    ]);
+  });
+
+  it("rejects a payload that is not a board", () => {
+    expect(() => adapters.keka.parse({ error: "TenantNotFound" }, "x/y")).toThrow(/not an array/);
+  });
+});

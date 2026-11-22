@@ -17,6 +17,9 @@ export interface NormalizedJob {
 
 export interface AtsAdapter {
   url(slug: string): string;
-  /** Throws if the payload is not this board's shape. */
-  parse(payload: unknown): NormalizedJob[];
+  /**
+   * Throws if the payload is not this board's shape. `slug` is the board id,
+   * for boards whose payload does not carry its own URLs.
+   */
+  parse(payload: unknown, slug?: string): NormalizedJob[];
 }

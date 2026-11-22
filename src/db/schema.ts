@@ -6,7 +6,7 @@ import type { ObjectId } from "mongodb";
 export const STAGES = ["stealth", "pre_seed", "seed", "series_a", "series_b_plus"] as const;
 export const ROUND_TYPES = ["grant", "pre_seed", "seed", "series_a", "series_b_plus", "unknown"] as const;
 export const OFFICE_STATUSES = ["no_office", "apartment", "coworking", "leased_office", "unknown"] as const;
-export const ATS_PROVIDERS = ["greenhouse", "ashby", "lever", "careers_page"] as const;
+export const ATS_PROVIDERS = ["greenhouse", "ashby", "lever", "keka", "careers_page"] as const;
 export const WORK_MODES = ["remote", "hybrid", "onsite"] as const;
 export const BLR_HUBS = [
   "HSR Layout",

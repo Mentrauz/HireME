@@ -28,7 +28,7 @@ await mapLimit(companies, 4, async (co) => {
   try {
     const payload = await fetchJson(adapters[provider].url(co.atsSlug!));
     await saveRaw(provider, day, co.atsSlug!, payload);
-    const result = await syncJobs(c, co._id, provider, adapters[provider].parse(payload), day);
+    const result = await syncJobs(c, co._id, provider, adapters[provider].parse(payload, co.atsSlug!), day);
     for (const key of ["seen", "added", "closed"] as const) totals[key] += result[key];
     console.log(`${target}: ${result.seen} live, ${result.added} new, ${result.closed} closed`);
   } catch (err) {

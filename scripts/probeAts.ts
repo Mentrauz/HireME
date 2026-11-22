@@ -14,7 +14,7 @@ const targets = slugs.flatMap((slug) => providers.map((provider) => ({ slug, pro
 
 await mapLimit(targets, 4, async ({ slug, provider }) => {
   try {
-    const jobs = adapters[provider].parse(await fetchJson(adapters[provider].url(slug)));
+    const jobs = adapters[provider].parse(await fetchJson(adapters[provider].url(slug)), slug);
     if (!jobs.length) return;
     console.log(
       JSON.stringify({
