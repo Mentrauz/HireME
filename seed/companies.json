@@ -17,5 +17,15 @@
   { "name": "Mindtickle", "domain": "mindtickle.com", "atsProvider": "lever", "atsSlug": "mindtickle", "stage": "series_b_plus" },
   { "name": "Hevo Data", "domain": "hevodata.com", "atsProvider": "lever", "atsSlug": "hevodata" },
   { "name": "Dozee", "domain": "dozee.health", "atsProvider": "lever", "atsSlug": "dozee" },
-  { "name": "Zerodha", "domain": "zerodha.com", "atsProvider": "careers_page", "careersUrl": "https://zerodha.com/careers/" }
+  { "name": "Zerodha", "domain": "zerodha.com", "atsProvider": "careers_page", "careersUrl": "https://zerodha.com/careers/" },
+  { "name": "Clueso", "domain": "clueso.io", "atsProvider": "ashby", "atsSlug": "clueso", "cohort": "YC W23", "seedSourceUrl": "https://www.ycombinator.com/companies/clueso" },
+  { "name": "Cardboard", "domain": "cardboard.ai", "atsProvider": "ashby", "atsSlug": "cardboard", "cohort": "YC W26", "seedSourceUrl": "https://www.ycombinator.com/companies/cardboard" },
+  { "name": "Bureau", "domain": "bureau.id", "atsProvider": "ashby", "atsSlug": "bureau", "seedSourceUrl": "https://jobs.ashbyhq.com/bureau" },
+  { "name": "Ema", "domain": "ema.co", "atsProvider": "ashby", "atsSlug": "ema", "seedSourceUrl": "https://jobs.ashbyhq.com/ema" },
+  { "name": "Smallest AI", "domain": "smallest.ai", "atsProvider": "ashby", "atsSlug": "smallest", "seedSourceUrl": "https://jobs.ashbyhq.com/smallest" },
+  { "name": "Tekion", "domain": "tekion.com", "atsProvider": "ashby", "atsSlug": "tekion", "seedSourceUrl": "https://jobs.ashbyhq.com/tekion" },
+  { "name": "CloudSEK", "domain": "cloudsek.com", "atsProvider": "greenhouse", "atsSlug": "cloudsek", "seedSourceUrl": "https://job-boards.greenhouse.io/cloudsek" },
+  { "name": "DevRev", "domain": "devrev.ai", "atsProvider": "greenhouse", "atsSlug": "devrev", "seedSourceUrl": "https://job-boards.greenhouse.io/devrev" },
+  { "name": "TrueFoundry", "domain": "truefoundry.com", "atsProvider": "greenhouse", "atsSlug": "truefoundry", "seedSourceUrl": "https://job-boards.greenhouse.io/truefoundry" },
+  { "name": "Zeta", "domain": "zeta.tech", "atsProvider": "lever", "atsSlug": "zeta", "seedSourceUrl": "https://jobs.lever.co/zeta" }
 ]
